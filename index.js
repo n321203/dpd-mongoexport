@@ -28,10 +28,13 @@ MongoExport.prototype.handle = function (ctx, next) {
     }
 
     // Export fields:
-    var fields = "username,loans.0.firstName,loans.0.lastName,_id,token,loans.0.loan,loans.0.address,loans.0.zip,loans.0.phone,loans.0.income,loans.0.bank,created,loans.0.created"
+    var fields = "username,loans.0.firstName,loans.0.lastName,_id,token,loans.0.loan,loans.0.address,loans.0.zip,loans.0.city,loans.0.municipality,loans.0.phone,loans.0.income,loans.0.bank,created,loans.0.created"
     fields += ",hasAcceptedOffer,hasDeclinedOffer"
     fields += ",hasAcceptedOffer201411,hasDeclinedOffer201411"
     fields += ",hasAcceptedOfferSthlm201412,hasDeclinedOfferSthlm201412"
+    fields += ",hasAcceptedOfferRekarne,hasDeclinedOfferRekarne"
+    fields += ",hasAcceptedOfferSEBJagersro,hasDeclinedOfferSEBJagersro"
+    fields += ",hasAcceptedOfferSHBMalmo,hasDeclinedOfferSHBMalmo"
     fields += ",loans.0.name,declineReason,declineReason201411,declineReasonSthlm201412"
     fields += ",hasShared,referralId,referredById,notes,isAdmin,name,socialAccount"
 
