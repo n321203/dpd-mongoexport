@@ -1,4 +1,4 @@
-var Resource = require('deployd/lib/resource')
+    var Resource = require('deployd/lib/resource')
 var util = require('util');
 var internalClient = require('deployd/lib/internal-client')
 var spawn = require('child_process').spawn;
@@ -35,6 +35,7 @@ MongoExport.prototype.handle = function (ctx, next) {
     fields += ",hasAcceptedOfferRekarne,hasDeclinedOfferRekarne"
     fields += ",hasAcceptedOfferSEBJagersro,hasDeclinedOfferSEBJagersro"
     fields += ",hasAcceptedOfferSHBMalmo,hasDeclinedOfferSHBMalmo"
+    fields += ",hasAcceptedOfferLFSkane,hasDeclinedOfferLFSkane"
     fields += ",loans.0.name,declineReason,declineReason201411,declineReasonSthlm201412"
     fields += ",hasShared,referralId,referredById,notes,isAdmin,name,socialAccount"
 
@@ -44,11 +45,9 @@ MongoExport.prototype.handle = function (ctx, next) {
     var loanFrom        = (body.loanFrom) ? body.loanFrom : "2010-01-02";
     var loanTo          = (body.loanTo) ? body.loanTo : "2020-01-01";
 
-
     if(loanFrom && loanFrom != "2010-01-02"){
         var dbquery     = '{ loans: { $elemMatch: { created: {$gte: "' + loanFrom + '"}, created: {$lte:"' + loanTo + '"} } } }' 
     }
-
     else 
         var dbquery     = "{ created: {$gte: \"" + createdFrom + "\"}, created:{$lte: \"" + createdTo + "\"} }"
 
@@ -69,14 +68,14 @@ MongoExport.prototype.handle = function (ctx, next) {
 	});
     mongoExport.on('close', function(code) {
     	
-    	// Replace all commas within quotes (in notes etc) with something else
+    	// Replace all commas within quotes (in comments etc) with something else
     	result = result.replace(/".*?"/g, function (match) {
     		return match.replace(/,/g, '±');
 		});
 		// Now change all commas to tabs
 		result = result.replace(/,/g, "	")
 
-		// Replace back commas in notes
+		// Replace back commas within quotes
     	result = result.replace(/".*?"/g, function (match) {
     		return match.replace(/±/g, ',');
 		})
