@@ -69,15 +69,15 @@ MongoExport.prototype.handle = function (ctx, next) {
     mongoExport.on('close', function(code) {
     	
     	// Replace all commas within quotes (in comments etc) with something else
-    	result = result.replace(/".*?"/g, function (match) {
-    		return match.replace(/,/g, '±');
+    	result = result.replace(/".*?"/g, function(str) {
+    		return str.replace(/,/g, '±');
 		});
 		// Now change all commas to tabs
 		result = result.replace(/,/g, "	")
 
 		// Replace back commas within quotes
-    	result = result.replace(/".*?"/g, function (match) {
-    		return match.replace(/±/g, ',');
+    	result = result.replace(/".*?"/g, function (str) {
+    		return str.replace(/±/g, ',');
 		})
 
     	result = "<meta charset='utf-8'><pre>" + result + "</pre>"
