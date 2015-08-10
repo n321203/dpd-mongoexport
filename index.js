@@ -15,6 +15,8 @@ module.exports = MongoExport;
 MongoExport.prototype.clientGeneration = true;
 MongoExport.prototype.handle = function (ctx, next) {
 
+	console.log("disabled")
+
 	// var dpd = internalClient.build(process.server);
 
  //    // Validate
