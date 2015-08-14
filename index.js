@@ -4,9 +4,7 @@ var internalClient = require('deployd/lib/internal-client')
 var spawn = require('child_process').spawn;
 
 var DPD_MONGOEXPORT_KEY = process.env.DPD_MONGOEXPORT_KEY;
-
 var mongodbUri = require('mongodb-uri');
-var MONGOHQ_URL = process.env.MONGOHQ_URL || false;
 
 function MongoExport(name, options) {
     Resource.apply(this, arguments);
@@ -18,16 +16,10 @@ module.exports = MongoExport;
 MongoExport.prototype.clientGeneration = true;
 MongoExport.prototype.handle = function (ctx, next) {
 
-    if(!MONGOHQ_URL){
-        console.log("Missing environment variable MONGOHQ_URL!");
-        ctx.done({error:"Missing environment variable MONGOHQ_URL"}, null)
-        return;
-    }
-    var uriObject           = mongodbUri.parse(MONGOHQ_URL);
+    var uriObject           = mongodbUri.parse(process.server.db.connectionString);
     var DB_USERNAME         = uriObject.username;
     var DB_PASS             = uriObject.password;
     var DB_NAME             = uriObject.database;
-
 
     var dpd = internalClient.build(process.server);
 
@@ -76,8 +68,7 @@ MongoExport.prototype.handle = function (ctx, next) {
     mongoExport.stdout.on('data', function(data) {
         result += data;
     });
-    mongoExport.on('close', function(code) {
-        
+    mongoExport.on('close', function(code) {      
         // Replace all commas within quotes (in comments etc) with something else
         result = result.replace(/".*?"/g, function(str) {
             return str.replace(/,/g, '±');
