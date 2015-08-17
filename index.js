@@ -73,8 +73,8 @@ MongoExport.prototype.handle = function (ctx, next) {
         result = result.replace(/".*?"/g, function(str) {
             return str.replace(/,/g, '±');
         });
-        // Now change all commas to tabs
-        result = result.replace(/,/g, " ")
+        // Now change all commas to semi-colons
+        result = result.replace(/,/g, ";")
 
         // Replace back commas within quotes
         result = result.replace(/".*?"/g, function (str) {
