@@ -20,6 +20,8 @@ MongoExport.prototype.handle = function (ctx, next) {
     var DB_USERNAME         = uriObject.username;
     var DB_PASS             = uriObject.password;
     var DB_NAME             = uriObject.database;
+    var DB_PORT             = uriObject.port;
+    var DB_HOST             = uriObject.host;
 
     var dpd = internalClient.build(process.server);
 
@@ -54,8 +56,8 @@ MongoExport.prototype.handle = function (ctx, next) {
         var dbquery     = "{ created: {$gte: \"" + createdFrom + "\"}, created:{$lte: \"" + createdTo + "\"} }"
 
    var params = [ 
-        '--host', 'paulo.mongohq.com',
-        '--port', 10006,
+        '--host', DB_HOST,
+        '--port', DB_PORT,
         '--db', DB_NAME,
         '--username', DB_USERNAME,
         '--password', DB_PASS]
