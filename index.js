@@ -20,14 +20,13 @@ MongoExport.prototype.handle = function (ctx, next) {
     var DB_USERNAME         = uriObject.username;
     var DB_PASS             = uriObject.password;
     var DB_NAME             = uriObject.database;
-    var DB_PORT             = uriObject.port;
-    var DB_HOST             = uriObject.host;
-
+    var DB_PORT             = uriObject.hosts[0].port;
+    var DB_HOST             = uriObject.hosts[0].host;
     var dpd = internalClient.build(process.server);
 
     // Validate
     var body = ctx.req.body || {}
-    if(!body || !body.k || body.k != DPD_MONGOEXPORT_KEY){
+    if(typeof body=="undefined" || !body.k || body.k != DPD_MONGOEXPORT_KEY){
         return next();
     }
 
