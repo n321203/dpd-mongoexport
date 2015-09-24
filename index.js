@@ -24,6 +24,7 @@ MongoExport.prototype.handle = function (ctx, next) {
     var DB_HOST             = uriObject.hosts[0].host;
     var dpd = internalClient.build(process.server);
 
+
     // Validate
     var body = ctx.req.body || {}
     if(typeof body=="undefined" || !body.k || body.k != DPD_MONGOEXPORT_KEY){
